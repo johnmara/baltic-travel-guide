@@ -97,6 +97,7 @@
     <div style="display:flex;flex-direction:column;gap:2px;">
       <a href="#flights" style="color:#f3ead9;text-decoration:none;font-size:13px;font-weight:700;padding:8px 10px;border-radius:6px;opacity:.85;">✈ Πτήσεις &amp; Διαμονή</a>
       <a href="#tickets" style="color:#f3ead9;text-decoration:none;font-size:13px;font-weight:700;padding:8px 10px;border-radius:6px;opacity:.85;">🚢 Εισιτήρια</a>
+      <a href="#maps" style="color:#f3ead9;text-decoration:none;font-size:13px;font-weight:700;padding:8px 10px;border-radius:6px;opacity:.85;">🗺 Google Maps</a>
       <a href="#route" style="color:#f3ead9;text-decoration:none;font-size:13px;font-weight:700;padding:8px 10px;border-radius:6px;opacity:.85;margin-bottom:10px;">🗺 Διαδρομή</a>
       <sc-for list="{{ days }}" as="d" hint-placeholder-count="11">
         <a href="{{ d.anchorHref }}" style="color:#f3ead9;text-decoration:none;font-size:13px;padding:7px 10px;border-radius:6px;display:flex;gap:8px;align-items:baseline;">
@@ -174,6 +175,15 @@
         </div>
       </section>
 
+      <section id="maps" style="margin-bottom:{{ sectionGap }}px;">
+        <h2 style="font-family:'Lora',serif;font-size:26px;color:{{ navy }};margin:0 0 18px;">🗺 Λίστες Google Maps</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <sc-for list="{{ mapsLists }}" as="m" hint-placeholder-count="6">
+            <a href="{{ m.url }}" target="_blank" rel="noopener" style="font-size:13px;background:{{ soft }};border:1px solid #e9dfcc;border-radius:100px;padding:6px 14px;color:#55503f;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">🗺 {{ m.label }}</a>
+          </sc-for>
+        </div>
+      </section>
+
       <section id="route" style="margin-bottom:{{ sectionGap }}px;">
         <h2 style="font-family:'Lora',serif;font-size:26px;color:{{ navy }};margin:0 0 20px;">🗺 Η διαδρομή</h2>
         <div style="background:#fff;border:1px solid #e9dfcc;border-radius:16px;padding:12px;">
@@ -243,14 +253,6 @@
         </section>
       </sc-for>
 
-      <footer style="border-top:1px solid #e9dfcc;padding-top:28px;margin-top:20px;">
-        <div style="font-family:'Lora',serif;font-size:18px;color:{{ navy }};margin-bottom:10px;">Λίστες Google Maps</div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;">
-          <sc-for list="{{ mapsLists }}" as="m" hint-placeholder-count="6">
-            <a href="{{ m.url }}" target="_blank" rel="noopener" style="font-size:13px;background:{{ soft }};border:1px solid #e9dfcc;border-radius:100px;padding:6px 14px;color:#55503f;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">🗺 {{ m.label }}</a>
-          </sc-for>
-        </div>
-      </footer>
 
     </div>
   </main>
