@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="ext-resource-dependency" content="./.image-slots.state.json" data-resource-id="imageSlotsState">
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <rect width="200" height="200" fill="#1c3d5a"/>
+    <text x="100" y="120" font-family="Georgia, serif" font-size="90" fill="#e8c9a0" text-anchor="middle">✈</text>
+  </svg>
+</template>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#f6f1e7;}
+  a{color:#c65d3b;}
+  a:hover{color:#8f3d24;}
+  ::selection{background:#e8c9a0;}
+</style>
+</helmet>
+<div style="display:flex;min-height:100vh;background:#f6f1e7;font-family:'Karla',sans-serif;color:#2c2a24;">
+  <nav style="position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;width:236px;flex:0 0 236px;background:{{ navy }};color:#f3ead9;padding:{{ sidebarPadding }};box-sizing:border-box;">
+    <div style="font-family:{{ handFont }};font-size:30px;line-height:1.1;color:{{ gold }};">Ταξιδιωτικό ημερολόγιο</div>
+    <div style="font-size:13px;opacity:.72;margin:6px 0 26px;letter-spacing:.02em;">19–29 Αυγούστου 2026</div>
+    <div style="display:flex;flex-direction:column;gap:2px;">
+      <a href="#flights" style="color:#f3ead9;text-decoration:none;font-size:13px;font-weight:700;padding:8px 10px;border-radius:6px;opacity:.85;">✈ Πτήσεις &amp; Διαμονή</a>
+      <a href="#route" style="color:#f3ead9;text-decoration:none;font-size:13px;font-weight:700;padding:8px 10px;border-radius:6px;opacity:.85;margin-bottom:10px;">🗺 Διαδρομή</a>
+      <sc-for list="{{ days }}" as="d" hint-placeholder-count="11">
+        <a href="{{ d.anchorHref }}" style="color:#f3ead9;text-decoration:none;font-size:13px;padding:7px 10px;border-radius:6px;display:flex;gap:8px;align-items:baseline;">
+          <span style="font-family:'Lora',serif;font-weight:700;color:{{ gold }};min-width:16px;">{{ d.num }}</span>
+          <span style="opacity:.88;">{{ d.navLabel }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </nav>
+
+  <main style="flex:1;min-width:0;padding:{{ mainPadding }};box-sizing:border-box;">
+    <div style="max-width:920px;margin:0 auto;">
+
+      <header style="margin-bottom:{{ sectionGap }}px;">
+        <div style="font-family:{{ handFont }};font-size:22px;color:{{ accent }};font-weight:700;">Πρόγραμμα ταξιδιού</div>
+        <h1 style="font-family:'Lora',serif;font-size:52px;line-height:1.05;margin:6px 0 14px;color:{{ navy }};">Βαλτική &amp; Φινλανδία</h1>
+        <p style="font-size:17px;line-height:1.6;color:#55503f;max-width:620px;margin:0;">Ένα οδοιπορικό 11 ημερών από το μεσαιωνικό Ταλίν μέχρι τα κάστρα της Λιθουανίας, με στάση στο Ελσίνκι, τη Ρίγα και τη Γιούρμαλα.</p>
+        <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;">
+          <sc-for list="{{ countryTags }}" as="c" hint-placeholder-count="4">
+            <span style="font-size:12px;font-weight:700;padding:6px 14px;border-radius:100px;background:{{ c.bg }};color:{{ c.fg }};">{{ c.label }}</span>
+          </sc-for>
+        </div>
+      </header>
+
+      <section id="flights" style="margin-bottom:{{ sectionGap }}px;">
+        <h2 style="font-family:'Lora',serif;font-size:26px;color:{{ navy }};margin:0 0 18px;">✈ Πτήσεις &amp; Διαμονή</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+          <sc-for list="{{ flights }}" as="f" hint-placeholder-count="2">
+            <div style="background:#fff;border:1px solid #e9dfcc;border-radius:14px;padding:20px;">
+              <div style="font-size:12px;font-weight:700;color:{{ accent }};text-transform:uppercase;letter-spacing:.04em;">{{ f.date }}</div>
+              <div style="font-family:'Lora',serif;font-size:19px;color:{{ navy }};margin:6px 0 10px;">{{ f.route }}</div>
+              <div style="font-size:14px;color:#55503f;line-height:1.7;">
+                {{ f.airline }}<br/>
+                {{ f.depart }} → {{ f.arrive }}<br/>
+                {{ f.extra }}
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <sc-for list="{{ stays }}" as="s" hint-placeholder-count="3">
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:14px 4px;border-bottom:1px solid #e9dfcc;">
+            <div>
+              <div style="font-weight:700;color:{{ navy }};">{{ s.name }}</div>
+              <div style="font-size:13px;color:#786f57;">{{ s.city }}</div>
+            </div>
+            <div style="font-size:13px;color:#55503f;text-align:right;">{{ s.period }}</div>
+          </div>
+        </sc-for>
+      </section>
+
+      <section id="route" style="margin-bottom:{{ sectionGap }}px;">
+        <h2 style="font-family:'Lora',serif;font-size:26px;color:{{ navy }};margin:0 0 20px;">🗺 Η διαδρομή</h2>
+        <div style="background:#fff;border:1px solid #e9dfcc;border-radius:16px;padding:12px;">
+          <iframe src="./baltic-route-map.html" title="Χάρτης διαδρομής" style="width:100%;height:520px;border:0;display:block;"></iframe>
+        </div>
+      </section>
+
+      <sc-for list="{{ days }}" as="d" hint-placeholder-count="11">
+        <section id="{{ d.anchorId }}" style="margin-bottom:{{ dayGap }}px;scroll-margin-top:24px;">
+          <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:4px;">
+            <div style="font-family:{{ handFont }};font-size:44px;font-weight:700;color:{{ gold }};line-height:1;">{{ d.num }}</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:{{ accent }};text-transform:uppercase;letter-spacing:.03em;">{{ d.date }}</div>
+              <h3 style="font-family:'Lora',serif;font-size:26px;margin:2px 0 0;color:{{ navy }};">{{ d.title }}</h3>
+            </div>
+          </div>
+          <sc-if value="{{ d.stay }}" hint-placeholder-val="{{ true }}">
+            <div style="font-size:13px;color:#786f57;margin:6px 0 18px 60px;">🛏 Διαμονή: {{ d.stay }}</div>
+          </sc-if>
+
+          <div style="margin:20px 0 20px 60px;">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ d.photoId }}" placeholder="{{ d.photoPlaceholder }}" shape="rounded" radius="14" style="width:100%;height:220px;" hint-size="100%,220px"></x-import>
+          </div>
+
+          <div style="margin-left:60px;display:flex;flex-direction:column;gap:{{ sightsGap }}px;">
+            <sc-for list="{{ d.sights }}" as="sight" hint-placeholder-count="6">
+              <div>
+                <span style="font-weight:700;color:{{ navy }};">{{ sight.name }}</span>
+                <span style="color:#55503f;"> — {{ sight.desc }}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ d.trivia }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:26px 0 0 60px;background:{{ soft }};border:1px dashed {{ border }};border-radius:14px;padding:20px 22px;">
+              <div style="font-family:{{ handFont }};font-size:22px;color:{{ accent }};font-weight:700;margin-bottom:8px;">✎ Ήξερες ότι… ({{ d.triviaCity }})</div>
+              <sc-for list="{{ d.trivia }}" as="t" hint-placeholder-count="4">
+                <div style="font-size:14px;line-height:1.7;color:#55503f;">— {{ t }}</div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ d.food }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:20px 0 0 60px;">
+              <div style="font-family:'Lora',serif;font-size:18px;color:{{ navy }};margin-bottom:10px;">🍽 Τοπικά προϊόντα &amp; φαγητά — {{ d.foodCountry }}</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;">
+                <sc-for list="{{ d.food }}" as="fd" hint-placeholder-count="6">
+                  <div style="background:#fff;border:1px solid #e9dfcc;border-radius:12px;padding:14px 16px;">
+                    <div style="font-weight:700;font-size:14px;color:{{ navy }};">{{ fd.name }}</div>
+                    <div style="font-size:13px;color:#55503f;line-height:1.5;margin-top:4px;">{{ fd.desc }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ d.shops }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:20px 0 0 60px;">
+              <div style="font-family:'Lora',serif;font-size:18px;color:{{ navy }};margin-bottom:10px;">☕ Πού να φας &amp; να πιεις</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <sc-for list="{{ d.shops }}" as="sh" hint-placeholder-count="5">
+                  <div style="font-size:14px;color:#55503f;"><span style="font-weight:700;color:{{ navy }};">{{ sh.name }}</span> — {{ sh.desc }}</div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </section>
+      </sc-for>
+
+      <footer style="border-top:1px solid #e9dfcc;padding-top:28px;margin-top:20px;">
+        <div style="font-family:'Lora',serif;font-size:18px;color:{{ navy }};margin-bottom:10px;">Λίστες Google Maps</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <sc-for list="{{ mapsLists }}" as="m" hint-placeholder-count="6">
+            <span style="font-size:13px;background:{{ soft }};border:1px solid #e9dfcc;border-radius:100px;padding:6px 14px;color:#55503f;">{{ m }}</span>
+          </sc-for>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+</div>
+]]>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: {&quot;width&quot;: 1400, &quot;height&quot;: 1000},
+  &quot;palette&quot;: {
+    &quot;editor&quot;: &quot;color&quot;,
+    &quot;default&quot;: [&quot;#c65d3b&quot;, &quot;#fbf3e4&quot;, &quot;#d8b98a&quot;, &quot;#1c3d5a&quot;],
+    &quot;options&quot;: [
+      [&quot;#c65d3b&quot;, &quot;#fbf3e4&quot;, &quot;#d8b98a&quot;, &quot;#1c3d5a&quot;],
+      [&quot;#3f7a5c&quot;, &quot;#eef3ea&quot;, &quot;#a9c79c&quot;, &quot;#20402f&quot;],
+      [&quot;#3a5f8a&quot;, &quot;#eaf0f7&quot;, &quot;#aac0d9&quot;, &quot;#16324f&quot;]
+    ],
+    &quot;tsType&quot;: &quot;string[]&quot;,
+    &quot;section&quot;: &quot;Στυλ&quot;,
+    &quot;label&quot;: &quot;Χρωματική παλέτα&quot;
+  },
+  &quot;journalIntensity&quot;: {
+    &quot;editor&quot;: &quot;enum&quot;,
+    &quot;default&quot;: &quot;έντονο&quot;,
+    &quot;options&quot;: [&quot;έντονο&quot;, &quot;διακριτικό&quot;],
+    &quot;tsType&quot;: &quot;string&quot;,
+    &quot;section&quot;: &quot;Στυλ&quot;,
+    &quot;label&quot;: &quot;Χειρόγραφο ύφος&quot;
+  },
+  &quot;density&quot;: {
+    &quot;editor&quot;: &quot;enum&quot;,
+    &quot;default&quot;: &quot;άνετο&quot;,
+    &quot;options&quot;: [&quot;άνετο&quot;, &quot;συμπαγές&quot;],
+    &quot;tsType&quot;: &quot;string&quot;,
+    &quot;section&quot;: &quot;Στυλ&quot;,
+    &quot;label&quot;: &quot;Πυκνότητα διάταξης&quot;
+  }
+}">
+class Component extends DCLogic {
+  renderVals() {
+    const paletteArr = this.props.palette ?? ["#c65d3b", "#fbf3e4", "#d8b98a", "#1c3d5a"];
+    const [accent, soft, border, navy] = paletteArr;
+    const goldMap = { "#c65d3b": "#e8c9a0", "#3f7a5c": "#cfe0c2", "#3a5f8a": "#c7d6ea" };
+    const gold = goldMap[accent] ?? "#e8c9a0";
+    const journal = this.props.journalIntensity ?? "έντονο";
+    const handwritten = journal === "έντονο";
+    const handFont = handwritten ? "'Caveat',cursive" : "'Lora',serif";
+    const density = this.props.density ?? "άνετο";
+    const spacious = density === "άνετο";
+    const mainPadding = spacious ? "56px 6vw 100px" : "32px 5vw 60px";
+    const sidebarPadding = spacious ? "32px 22px" : "20px 16px";
+    const sectionGap = spacious ? 60 : 34;
+    const dayGap = spacious ? 60 : 32;
+    const sightsGap = spacious ? 14 : 8;
+
+    const days = [
+      {
+        num: 1, date: "Τετ 19/08/2026", title: "Άφιξη στο Ταλίν (Εσθονία)", navLabel: "Ταλίν · Άφιξη",
+        stay: "Hestia Hotel Seaport Tallinn",
+        photoId: "day-1-photo", photoPlaceholder: "Φωτογραφία: Παλιά Πόλη Ταλίν",
+        sights: [
+          {name:"Παλιά Μεσαιωνική Πόλη (Vanatallinn)", desc:"Μία από τις καλύτερα διατηρημένες μεσαιωνικές πόλεις της Ευρώπης (UNESCO)."},
+          {name:"Πλατεία Δημαρχείου (Raekoja plats)", desc:"Η ιστορική καρδιά της παλιάς πόλης εδώ και 800 χρόνια."},
+          {name:"Δημαρχείο Ταλίν (Tallinna Raekoda)", desc:"Το μοναδικό ανέπαφο γοτθικό δημαρχείο στη Βόρεια Ευρώπη."},
+          {name:"Ναός του Αγίου Όλαφ (Oleviste kogudus)", desc:"258 στενά σκαλιά και πανοραμική θέα 360 μοιρών."},
+          {name:"Pierre Chocolaterie", desc:"Γραφικό, vintage καφέ φημισμένο για την εξαιρετική του σοκολάτα."},
+          {name:"Παλιό Φαρμακείο (Raeapteek)", desc:"Το παλαιότερο συνεχώς λειτουργούν φαρμακείο στην Ευρώπη (από το 1422)."},
+          {name:"Restoran Olde Hansa", desc:"Μεσαιωνικό εστιατόριο-εμπειρία με φαγητό εποχής υπό το φως των κεριών."},
+          {name:"Λόφος &amp; Κάστρο Toompea", desc:"Το ιστορικό κέντρο εξουσίας, σήμερα έδρα του Κοινοβουλίου."},
+          {name:"Πύργος Pikk Hermann", desc:"Εκεί υψώνεται καθημερινά η σημαία της χώρας."},
+          {name:"Καθεδρικός Αγίου Αλεξάνδρου Νιέφσκι", desc:"Επιβλητικός ρωσικός ορθόδοξος ναός με τρούλους-κρεμμύδια."},
+        ],
+        trivia: [
+          "Ο μύθος λέει πως η σημαία της Δανίας «έπεσε από τον ουρανό» στη Μάχη του Λιντάνισε (1219) — έγινε η παλαιότερη εθνική σημαία στον κόσμο.",
+          "Η πόλη ήταν χωρισμένη σε Toompea (ευγενείς) και All-Linn (έμποροι) — δύο εχθρικές κοινότητες με ξεχωριστά τείχη.",
+          "Στη σοβιετική εποχή το Ταλίν έπιανε φινλανδική τηλεόραση — το «παράθυρο» στη Δύση που κράτησε ζωντανή την επιθυμία για ελευθερία.",
+          "Η «Τραγουδιστή Επανάσταση» (1987-91): εκατοντάδες χιλιάδες Εσθονοί τραγούδησαν απαγορευμένα πατριωτικά τραγούδια αντί για όπλα.",
+          "Ο θρύλος του Ülemiste Vanake: ο γέρος της λίμνης ρωτά κάθε χρόνο αν το Ταλίν «τελείωσε» — η απάντηση πρέπει πάντα να είναι όχι.",
+        ],
+        triviaCity: "Ταλίν",
+      },
+      {
+        num: 2, date: "Πεμ 20/08/2026", title: "Ταλίν", navLabel: "Ταλίν",
+        stay: "Hestia Hotel Seaport Tallinn",
+        photoId: "day-2-photo", photoPlaceholder: "Φωτογραφία: Kalamaja / KUMU",
+        sights: [
+          {name:"Παλάτι &amp; Μουσείο Κάντριοργκ", desc:"Μπαρόκ παλάτι του Πέτρου Μέγα με έργα ξένης τέχνης (15€)."},
+          {name:"Ιαπωνικός Κήπος", desc:"Γαλήνιο κομμάτι του πάρκου Κάντριοργκ με λιμνούλες."},
+          {name:"KUMU", desc:"Το μεγαλύτερο μουσείο τέχνης στη Βαλτική (16€)."},
+          {name:"Μονοπάτι Viru Bog", desc:"Ξύλινο μονοπάτι 3–6χλμ μέσα από αρχαίο βάλτο (50χλμ από Ταλίν)."},
+          {name:"Ναυτικό Μουσείο (Lennusadam)", desc:"Υπόστεγα υδροπλάνων, αυθεντικό υποβρύχιο του 1936 (22€)."},
+          {name:"Γειτονιά Kalamaja", desc:"Trendy χίπστερ γειτονιά με παραδοσιακά ξύλινα σπίτια."},
+          {name:"COLAB", desc:"Δημοφιλές στέκι για ποιοτικό καφέ."},
+          {name:"Αγορά Balti Jaama Turg", desc:"Υπερσύγχρονη αγορά με τοπικά προϊόντα και street food."},
+          {name:"Telliskivi Creative City", desc:"Βιομηχανικό συγκρότημα με street art και καφέ."},
+        ],
+        food: [
+          {name:"Leib", desc:"Εσθονικό μαύρο ψωμί σίκαλης, σκούρο και ελαφρώς γλυκό."},
+          {name:"Vana Tallinn", desc:"Το εθνικό λικέρ, γλυκό με βάση το ρούμι και εσπεριδοειδή."},
+          {name:"Σοκολάτες Kalev", desc:"Ιστορική σοκολατοποιία από το 1806, ψάξε για μαρτζιπάν."},
+          {name:"Kiluvõileib", desc:"Σάντουιτς μαύρου ψωμιού με παπαλίνα, αυγό και κρεμμυδάκι."},
+          {name:"Κρέας κυνηγιού", desc:"Αρκούδα, αγριογούρουνο, άλκη — δοκίμασέ το στο Olde Hansa."},
+          {name:"Kohuke", desc:"Μπάρα από γλυκό τυρί κότατζ βουτηγμένη σε σοκολάτα."},
+        ],
+        foodCountry: "Εσθονία",
+      },
+      {
+        num: 3, date: "Παρ 21/08/2026", title: "Εξερεύνηση στο Ελσίνκι", navLabel: "Ελσίνκι",
+        photoId: "day-3-photo", photoPlaceholder: "Φωτογραφία: Temppeliaukio Church",
+        sights: [
+          {name:"Uspenski Cathedral", desc:"Ο μεγαλύτερος ορθόδοξος ναός στη Δ. Ευρώπη, κόκκινο τούβλο."},
+          {name:"Temppeliaukio Church", desc:"Η «εκκλησία των βράχων», λαξευμένη σε φυσικό γρανίτη."},
+          {name:"The Parliament House", desc:"Νεοκλασικό κτίριο, έδρα του φινλανδικού κοινοβουλίου."},
+          {name:"Andante Coffee", desc:"Ζεστό καφέ με specialty καφέ και φυτά εσωτερικού χώρου."},
+          {name:"Old Market Hall", desc:"Ιστορική αγορά του 1889 — δοκίμασε σούπα σολομού."},
+          {name:"Kamppi Chapel", desc:"Το ξύλινο «Παρεκκλήσι της Σιωπής»."},
+          {name:"Oodi", desc:"Υπερσύγχρονη κεντρική βιβλιοθήκη του Ελσίνκι."},
+          {name:"Allas Sea Pool", desc:"Θερμαινόμενες πισίνες δίπλα στη θάλασσα του λιμανιού."},
+        ],
+      },
+      {
+        num: 4, date: "Σαβ 22/08/2026", title: "Μετάβαση στη Ρίγα (Λετονία)", navLabel: "Ρίγα · Άφιξη",
+        stay: "Riga Lux Apartments – Ernesta",
+        photoId: "day-4-photo", photoPlaceholder: "Φωτογραφία: House of the Black Heads",
+        sights: [
+          {name:"Παλιά Πόλη Ρίγας (Vecrīga)", desc:"Ιστορικός πλακόστρωτος πυρήνας με μεσαιωνική γοητεία."},
+          {name:"Πλατεία Δημαρχείου &amp; House of the Black Heads", desc:"Το πιο εντυπωσιακό κτίριο της Ρίγας."},
+          {name:"Riga City Hall", desc:"Σύγχρονο ανακατασκευασμένο κτίριο διοίκησης."},
+          {name:"St. Peter's Church", desc:"Πύργος-ασανσέρ με την καλύτερη θέα στη Ρίγα (72μ)."},
+        ],
+      },
+      {
+        num: 5, date: "Κυρ 23/08/2026", title: "Εξερεύνηση στη Ρίγα", navLabel: "Ρίγα · Κέντρο",
+        stay: "Riga Lux Apartments – Ernesta",
+        photoId: "day-5-photo", photoPlaceholder: "Φωτογραφία: The Cat House",
+        sights: [
+          {name:"Three Brothers", desc:"Παλαιότερο συγκρότημα τριών κατοικιών της πόλης (15ος-17ος αι.)."},
+          {name:"Σουηδική Πύλη", desc:"Πύλη του 17ου αιώνα, σωζόμενο τμήμα των μεσαιωνικών τειχών."},
+          {name:"The Cat House", desc:"Art Nouveau κτίριο με τα διάσημα γλυπτά μαύρων γατών."},
+          {name:"Πάρκο Bastejkalns", desc:"Ρομαντικό πράσινο πάρκο με κανάλια, βόλτα με ξύλινη βάρκα."},
+          {name:"Μνημείο της Ελευθερίας", desc:"Οβελίσκος 42μ με το άγαλμα «Milda»."},
+          {name:"Κεντρική Αγορά Ρίγας", desc:"Τεράστια σκεπαστή αγορά σε 5 παλιά υπόστεγα Zeppelin (UNESCO)."},
+        ],
+      },
+      {
+        num: 6, date: "Δευ 24/08/2026", title: "Εκδρομή στη Γιούρμαλα / Γκάουγια", navLabel: "Γιούρμαλα",
+        stay: "Riga Lux Apartments – Ernesta",
+        photoId: "day-6-photo", photoPlaceholder: "Φωτογραφία: Majori Beach",
+        sights: [
+          {name:"Jomas iela", desc:"Κεντρικός πεζόδρομος γεμάτος ζωή, καφέ και εστιατόρια."},
+          {name:"Majori Beach", desc:"Αμμώδης παραλία με ψιλή λευκή άμμο και το άγαλμα της χελώνας."},
+          {name:"Jūras iela", desc:"Δρόμος με πανέμορφα ξύλινα εξοχικά σπίτια Art Nouveau."},
+          {name:"Πύργος Dzintari", desc:"Πύργος παρατήρησης 33,5μ μέσα στο πευκόδασος."},
+          {name:"Dzintari Concert Hall", desc:"Ιστορικό συγκρότημα συναυλιών με καλοκαιρινή σκηνή."},
+          {name:"Ķemeri National Park", desc:"Εναλλακτικά: ξύλινο μονοπάτι πάνω από άγριο βάλτο."},
+        ],
+      },
+      {
+        num: 7, date: "Τρι 25/08/2026", title: "Ελεύθερη ημέρα στη Ρίγα", navLabel: "Ρίγα · Ελεύθερη",
+        photoId: "day-7-photo", photoPlaceholder: "Φωτογραφία: National Library of Latvia",
+        sights: [
+          {name:"National Library of Latvia", desc:"«Κάστρο του Φωτός» — γυάλινο κτίριο με θέα στην Παλιά Πόλη."},
+          {name:"Holy Trinity Church", desc:"Ναός με έντονο κόκκινο χρώμα και γαλάζιους τρούλους."},
+          {name:"Latvian National Opera", desc:"Νεοκλασικό κτίριο του 1863 με μεγάλη μουσική παράδοση."},
+          {name:"Riga Nativity of Christ Cathedral", desc:"Ο μεγαλύτερος ορθόδοξος ναός, πρώην πλανητάριο επί ΕΣΣΔ."},
+        ],
+        food: [
+          {name:"Riga Black Balsam", desc:"Το εθνικό λικέρ από 24 βότανα, δοκίμασε την εκδοχή black currant."},
+          {name:"Rupjmaize", desc:"Βαρύ μαύρο ψωμί σίκαλης, ελαφρώς γλυκόξινο."},
+          {name:"Ķiploku grauzdiņi", desc:"Σκορδόψωμα — λωρίδες μαύρου ψωμιού τηγανισμένες με σκόρδο."},
+          {name:"Pelmeni", desc:"Ζυμαρικά γεμιστά με κρέας, σερβίρονται με ξινή κρέμα."},
+          {name:"Solanka", desc:"Πλούσια, ξινή και πικάντικη κρεατόσουπα με ντομάτα."},
+          {name:"Karbonāde", desc:"Χοιρινό σνίτσελ με σάλτσα μανιταριών και λιωμένο τυρί."},
+          {name:"Pīrāgi", desc:"Ψωμάκια σε σχήμα μισοφέγγαρου, γεμιστά με μπέικον και κρεμμύδι."},
+        ],
+        foodCountry: "Λετονία",
+        shops: [
+          {name:"Rozengrāls", desc:"Μεσαιωνικό εστιατόριο σε υπόγειο κελάρι του 13ου αιώνα."},
+          {name:"LIDO Alus sēta", desc:"Οικονομικό self-service με τηγανίτες πατάτας και σολάνκα."},
+          {name:"Domini Canes", desc:"Προσεγμένο εστιατόριο με σύγχρονη λετονική κουζίνα."},
+          {name:"Bar «Riga Black Magic»", desc:"Μπαρ-σοκολατερί, ζεστό balsam με χειροποίητα σοκολατάκια."},
+          {name:"Skyline Bar", desc:"Cocktail bar με την καλύτερη πανοραμική θέα της πόλης."},
+        ],
+        trivia: [
+          "Ιδρύθηκε το 1201 από τον Γερμανό Επίσκοπο Άλμπερτ και τους «Αδελφούς του Ξίφους» ως προπύργιο σταυροφόρων.",
+          "Το «Γωνιακό Σπίτι» (Stūra māja) ήταν το αρχηγείο της KGB στη Λετονία — σήμερα μουσείο κατοχής.",
+          "Το 1913 η Ρίγα ήταν η 3η μεγαλύτερη βιομηχανική πόλη της Ρωσικής Αυτοκρατορίας, πλουσιότερη από Κίεβο κι Οδησσό.",
+          "Το γραφικό κανάλι στο πάρκο Bastejkalns ήταν κάποτε η αμυντική τάφρος γύρω από τα τείχη της πόλης.",
+        ],
+        triviaCity: "Ρίγα",
+      },
+      {
+        num: 8, date: "Τετ 26/08/2026", title: "Μετάβαση στο Βίλνιους (Λιθουανία)", navLabel: "Βίλνιους · Άφιξη",
+        stay: "Central and Lovely Apartment, Vilnius Old Town",
+        photoId: "day-8-photo", photoPlaceholder: "Φωτογραφία: Church of St. Anne",
+        sights: [
+          {name:"Literatų Street", desc:"Καλλιτεχνικό σοκάκι με πάνω από 200 μικρά έργα τέχνης."},
+          {name:"Church of St. Anne", desc:"Γοτθικό αριστούργημα από κόκκινο τούβλο."},
+          {name:"Bernardine Garden", desc:"Πάρκο δίπλα στο ποτάμι με βελανιδιά 400 ετών."},
+          {name:"Užupis", desc:"Μποέμ γειτονιά — «ανεξάρτητη δημοκρατία» με δικό της σύνταγμα."},
+          {name:"Subačiaus Observation Deck", desc:"Θέα στο ηλιοβασίλεμα πάνω από την παλιά πόλη."},
+        ],
+      },
+      {
+        num: 9, date: "Πεμ 27/08/2026", title: "Εξερεύνηση στο Βίλνιους", navLabel: "Βίλνιους",
+        photoId: "day-9-photo", photoPlaceholder: "Φωτογραφία: Gediminas Castle Tower",
+        sights: [
+          {name:"KGB Museum", desc:"Πρώην αρχηγείο KGB, αυθεντικά κελιά κρατουμένων."},
+          {name:"Παλιά Πόλη &amp; Pilies Street", desc:"Κεντρικός πλακόστρωτος εμπορικός δρόμος."},
+          {name:"Vilnius Cathedral &amp; Bell Tower", desc:"Νεοκλασικός ναός με ανεξάρτητο καμπαναριό 13ου αι."},
+          {name:"«Stebuklas»", desc:"Πλακίδιο-αφετηρία της Βαλτικής Αλυσίδας του 1989."},
+          {name:"Palace of the Grand Dukes", desc:"Πλήρως ανακατασκευασμένο παλάτι-μουσείο."},
+          {name:"Gediminas Castle Tower", desc:"Κόκκινος τούβλινος πύργος, το σύμβολο της πόλης."},
+          {name:"Three Crosses Monument", desc:"Θέα στο ηλιοβασίλεμα από τον λόφο."},
+          {name:"Church of St. Casimir", desc:"Ροζ μπαρόκ ναός με τρούλο σε σχήμα κορώνας."},
+          {name:"Gates of Dawn", desc:"Η μοναδική σωζόμενη πύλη, με θαυματουργή εικόνα της Παναγίας."},
+        ],
+        food: [
+          {name:"Cepelinai", desc:"Το εθνικό πιάτο — dumplings πατάτας γεμιστά με κιμά."},
+          {name:"Šaltibarščiai", desc:"Κρύα ροζ σούπα από παντζάρι και κεφίρ."},
+          {name:"Kepta Duona", desc:"Τηγανητό μαύρο ψωμί με σκόρδο και λιωμένο τυρί."},
+          {name:"Kibinai", desc:"Πιτάκια με κρέας, must-eat στο Τρακάι."},
+          {name:"Džiugas", desc:"Σκληρό τυρί τύπου παρμεζάνας."},
+          {name:"Šakotis", desc:"Παραδοσιακό κέικ σε σχήμα δέντρου με «κλαδιά»."},
+          {name:"Gira &amp; Midus", desc:"Ποτά από ζύμωση μαύρου ψωμιού και μελιού αντίστοιχα."},
+        ],
+        foodCountry: "Λιθουανία",
+        trivia: [
+          "Πριν τον Β' Παγκόσμιο, το 40% του πληθυσμού ήταν Εβραίοι — το Βίλνιους λεγόταν «Ιερουσαλήμ του Βορρά».",
+          "Το Πανεπιστήμιο Βίλνιους (1579) είναι το παλαιότερο στη Βαλτική, φάρος της λιθουανικής γλώσσας.",
+          "Η Λιθουανία ήταν το τελευταίο παγανιστικό κράτος της Ευρώπης, μέχρι το 1387.",
+          "Στις 13 Ιαν 1991 άοπλοι πολίτες σχημάτισαν ανθρώπινο τείχος γύρω από τον Πύργο Τηλεόρασης έναντι σοβιετικών τανκς.",
+        ],
+        triviaCity: "Βίλνιους",
+      },
+      {
+        num: 10, date: "Παρ 28/08/2026", title: "Εκδρομή: Λιμναίο Κάστρο Τρακάι – Κάουνας", navLabel: "Τρακάι – Κάουνας",
+        photoId: "day-10-photo", photoPlaceholder: "Φωτογραφία: Trakai Island Castle",
+        sights: [
+          {name:"Trakai Island Castle", desc:"Παραμυθένιο κάστρο πάνω σε νησάκι στη μέση μιας λίμνης."},
+          {name:"Kaunas Castle", desc:"Τα ερείπια του μεσαιωνικού πέτρινου οχυρού."},
+          {name:"Laisvės alėja", desc:"Δενδροφυτεμένος πεζόδρομος γεμάτος καταστήματα και καφέ."},
+          {name:"Kaunas Town Hall Square", desc:"Ιστορική πλατεία με το κομψό λευκό Δημαρχείο."},
+          {name:"Devils' Museum", desc:"Ένα από τα πιο παράξενα μουσεία του κόσμου."},
+        ],
+      },
+      {
+        num: 11, date: "Σαβ 29/08/2026", title: "Check-out &amp; Επιστροφή", navLabel: "Επιστροφή",
+        photoId: "day-11-photo", photoPlaceholder: "Φωτογραφία: Αεροδρόμιο Βίλνιους",
+        sights: [
+          {name:"Ελεύθερος χρόνος", desc:"Τελευταίες αγορές, αναμνηστικά και φωτογραφίες στο Βίλνιους."},
+          {name:"Αεροδρόμιο Βίλνιους", desc:"Αναχώρηση για την πτήση επιστροφής στις 15:20."},
+        ],
+      },
+    ];
+    days.forEach(d => { d.anchorId = "day-" + d.num; d.anchorHref = "#day-" + d.num; });
+
+    return {
+      days,
+      countryTags: [
+        {label:"Εσθονία", bg:"oklch(58% 0.09 250)", fg:"#fdf8ee"},
+        {label:"Φινλανδία", bg:"oklch(58% 0.09 210)", fg:"#fdf8ee"},
+        {label:"Λετονία", bg:"oklch(58% 0.10 40)", fg:"#fdf8ee"},
+        {label:"Λιθουανία", bg:"oklch(58% 0.09 130)", fg:"#fdf8ee"},
+      ],
+      flights: [
+        {date:"Τετ 19/08/2026", route:"Αθήνα (ATH) → Ταλίν (TLL)", airline:"airBaltic BT818 · Airbus A220-300", depart:"04:35", arrive:"08:20", extra:"Economy BASIC"},
+        {date:"Σαβ 29/08/2026", route:"Βίλνιους (VNO) → Αθήνα (ATH)", airline:"Ryanair FR4979", depart:"15:20", arrive:"18:25", extra:"PNR: O1JZPJ"},
+      ],
+      stays: [
+        {name:"Hestia Hotel Seaport Tallinn", city:"Ταλίν, Εσθονία", period:"19 – 22 Αυγ (3 βράδια)"},
+        {name:"ERNESTA Grand Apartment", city:"Ρίγα, Λετονία · 90m², 2 υπν.", period:"22 – 26 Αυγ (4 βράδια)"},
+        {name:"Central and Lovely Apartment", city:"Βίλνιους Old Town, Λιθουανία", period:"26 – 29 Αυγ (3 βράδια)"},
+      ],
+      routeStops: [
+        {x:40, y:120, ty:145, anchor:"start", label:"Ταλίν"},
+        {x:260, y:90, ty:75, anchor:"middle", label:"Ελσίνκι"},
+        {x:460, y:60, ty:45, anchor:"middle", label:"Ρίγα"},
+        {x:560, y:20, ty:14, anchor:"middle", label:"Γιούρμαλα"},
+        {x:750, y:95, ty:120, anchor:"middle", label:"Βίλνιους"},
+        {x:860, y:110, ty:135, anchor:"end", label:"Τρακάι/Κάουνας"},
+      ].map(p => {
+        const anchorTransform = p.anchor === "middle" ? "translateX(-50%)" : p.anchor === "end" ? "translateX(-100%)" : "translateX(0)";
+        return { ...p, topPct: (p.ty / 160) * 100, leftPct: (p.x / 900) * 100, labelTransform: anchorTransform };
+      }),
+      mapsLists: ["Ελσίνκι", "Εσθονία", "Λετονία", "Καφέ-Φαγητό Λετονία", "Λιθουανία", "Λιθουανία φαγητό-ποτό"],
+      accent, soft, border, navy, gold, handFont,
+      mainPadding, sidebarPadding, sectionGap, dayGap, sightsGap,
+    };
+  }
+}
+</script>
+</body>
+</html>
