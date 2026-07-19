@@ -138,7 +138,7 @@
         <sc-for list="{{ stays }}" as="s" hint-placeholder-count="3">
           <div style="display:flex;justify-content:space-between;gap:16px;padding:14px 4px;border-bottom:1px solid #e9dfcc;">
             <div>
-              <div style="font-weight:700;color:{{ navy }};">{{ s.name }}</div>
+              <a href="{{ s.bookingUrl }}" target="_blank" rel="noopener" style="font-weight:700;color:{{ navy }};text-decoration:none;border-bottom:1px solid {{ border }};">{{ s.name }}</a>
               <div style="font-size:13px;color:#786f57;">{{ s.city }}</div>
             </div>
             <div style="font-size:13px;color:#55503f;text-align:right;">{{ s.period }}</div>
@@ -219,7 +219,7 @@
         <div style="font-family:'Lora',serif;font-size:18px;color:{{ navy }};margin-bottom:10px;">Λίστες Google Maps</div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;">
           <sc-for list="{{ mapsLists }}" as="m" hint-placeholder-count="6">
-            <span style="font-size:13px;background:{{ soft }};border:1px solid #e9dfcc;border-radius:100px;padding:6px 14px;color:#55503f;">{{ m }}</span>
+            <a href="{{ m.url }}" target="_blank" rel="noopener" style="font-size:13px;background:{{ soft }};border:1px solid #e9dfcc;border-radius:100px;padding:6px 14px;color:#55503f;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">🗺 {{ m.label }}</a>
           </sc-for>
         </div>
       </footer>
@@ -492,9 +492,9 @@ class Component extends DCLogic {
         {date:"Σαβ 29/08/2026", route:"Βίλνιους (VNO) → Αθήνα (ATH)", airline:"Ryanair FR4979", depart:"15:20", arrive:"18:25", extra:"PNR: O1JZPJ"},
       ],
       stays: [
-        {name:"Hestia Hotel Seaport Tallinn", city:"Ταλίν, Εσθονία", period:"19 – 22 Αυγ (3 βράδια)"},
-        {name:"ERNESTA Grand Apartment", city:"Ρίγα, Λετονία · 90m², 2 υπν.", period:"22 – 26 Αυγ (4 βράδια)"},
-        {name:"Central and Lovely Apartment", city:"Βίλνιους Old Town, Λιθουανία", period:"26 – 29 Αυγ (3 βράδια)"},
+        {name:"Hestia Hotel Seaport Tallinn", city:"Ταλίν, Εσθονία", period:"19 – 22 Αυγ (3 βράδια)", bookingUrl:"https://www.booking.com/reviews/ee/hotel/hestia-seaport.html"},
+        {name:"ERNESTA Grand Apartment", city:"Ρίγα, Λετονία · 90m², 2 υπν.", period:"22 – 26 Αυγ (4 βράδια)", bookingUrl:"https://www.booking.com/hotel/lv/two-room-apartment-in-the-centre-of-riga.el.html"},
+        {name:"Central and Lovely Apartment", city:"Βίλνιους Old Town, Λιθουανία", period:"26 – 29 Αυγ (3 βράδια)", bookingUrl:"https://www.booking.com/hotel/lt/central-and-lovely-apartment-in-vilnius-old-town-by-reside-baltic.html"},
       ],
       routeStops: [
         {x:40, y:120, ty:145, anchor:"start", label:"Ταλίν"},
@@ -507,7 +507,14 @@ class Component extends DCLogic {
         const anchorTransform = p.anchor === "middle" ? "translateX(-50%)" : p.anchor === "end" ? "translateX(-100%)" : "translateX(0)";
         return { ...p, topPct: (p.ty / 160) * 100, leftPct: (p.x / 900) * 100, labelTransform: anchorTransform };
       }),
-      mapsLists: ["Ελσίνκι", "Εσθονία", "Λετονία", "Καφέ-Φαγητό Λετονία", "Λιθουανία", "Λιθουανία φαγητό-ποτό"],
+      mapsLists: [
+        {label:"Ελσίνκι", url:"https://maps.app.goo.gl/QyKCSg7SbKpccN3D9"},
+        {label:"Εσθονία", url:"https://maps.app.goo.gl/1ETRfCU7NFAZgGnc8"},
+        {label:"Λετονία", url:"https://maps.app.goo.gl/VQsv1C8NnWZZFPne8"},
+        {label:"Καφέ-Φαγητό Λετονία", url:"https://maps.app.goo.gl/Ec6qyTE2UFpyCsxMA"},
+        {label:"Λιθουανία", url:"https://maps.app.goo.gl/6YV32FN9oA9X7V1U6"},
+        {label:"Λιθουανία φαγητό-ποτό", url:"https://maps.app.goo.gl/gnBJPJJT1gmijC7v5"},
+      ],
       accent, soft, border, navy, gold, handFont,
       mainPadding, sidebarPadding, sectionGap, dayGap, sightsGap,
     };
