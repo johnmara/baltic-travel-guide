@@ -22,6 +22,72 @@
   a{color:#c65d3b;}
   a:hover{color:#8f3d24;}
   ::selection{background:#e8c9a0;}
+
+  @media (max-width: 640px) {
+    /* Stack layout vertically — JS sets styles with spaces so selectors use normalized form */
+    div[style*="display: flex"][style*="min-height: 100vh"] {
+      flex-direction: column !important;
+    }
+
+    /* Sidebar → sticky top nav strip */
+    nav {
+      width: 100% !important;
+      flex: none !important;
+      height: auto !important;
+      align-self: stretch !important;
+      overflow-y: hidden !important;
+      padding: 10px 14px !important;
+      box-sizing: border-box !important;
+      z-index: 100;
+    }
+
+    /* Hide title and date in mobile nav */
+    nav > div:nth-child(1),
+    nav > div:nth-child(2) {
+      display: none !important;
+    }
+
+    /* Nav links → horizontal scrollable row */
+    nav > div:last-child {
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      gap: 2px !important;
+      align-items: center !important;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    nav > div:last-child::-webkit-scrollbar { display: none; }
+
+    nav a {
+      white-space: nowrap;
+      font-size: 12px !important;
+      padding: 5px 8px !important;
+    }
+
+    /* Main padding */
+    main { padding: 24px 16px 60px !important; }
+
+    /* Shrink hero title */
+    h1[style*="font-size: 52px"] {
+      font-size: 28px !important;
+      margin: 4px 0 10px !important;
+    }
+
+    /* Flights: 2 cols → 1 col */
+    div[style*="grid-template-columns: 1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Map iframe shorter */
+    iframe[title="Χάρτης διαδρομής"] { height: 280px !important; }
+
+    /* Remove 60px left indents (JS normalizes margins so 0 → 0px) */
+    [style*="px 60px"],
+    [style*="margin-left: 60px"] {
+      margin-left: 0 !important;
+    }
+  }
 </style>
 </helmet>
 <div style="display:flex;min-height:100vh;background:#f6f1e7;font-family:'Karla',sans-serif;color:#2c2a24;">
